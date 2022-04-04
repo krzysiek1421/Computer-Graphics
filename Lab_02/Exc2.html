@@ -63,13 +63,17 @@
          * mouse events.  As an example, this program does some simple drawing.
          */
         function installMouseHandler() {
-
             var dragging = false; // set to true when a drag action is in progress.
             var startX, startY; // coordinates of mouse at start of drag.
             var prevX, prevY; // previous mouse position during a drag.
             var toolChoice;
             var colorChoice; // Integer code for the selected color in the "colorChoide"
             // popup menu.  The value is assigned in doMouseDown.
+            var xi = new Array(15);
+            var yi = new Array(15);
+            var n = parseInt(15);
+            var dx;
+            var dy;
 
             function doMouseDown(evt) {
                 // This function is called when the user presses a button on the mouse.
@@ -126,16 +130,26 @@
                     graphics.fillStyle = "black";
                 } else if (colorChoice == 5) {
                     graphics.fillStyle = "orange";
+                } else if (colorChoice == 6) {
+                    graphics.fillStyle = "purple";
                 }
+
                 if (toolChoice == 1) {
-                    graphics.fillPoly(x, y - 20, x + 20, y + 20, x - 20, y + 20);
-                    graphics.strokePoly(x, y - 20, x + 20, y + 20, x - 20, y + 20);
+                    for (var i = 0; i <= n; i = i + 1) {
+                        dx = (30 * Math.sin(Math.PI / (n / 2) * i));
+                        dy = (30 * Math.cos(Math.PI / (n / 2) * i));
+                        xi[i] = parseInt(dx) + x;
+                        yi[i] = parseInt(dy) + y;
+                    }
+                    graphics.fillPolyWithArray(xi, yi, n);
+                    graphics.strokePolyWithArray(xi, yi, n);
+                    console.log("Przekazano parametr");
                 } else if (toolChoice == 2) {
                     graphics.fillRect(x - 20, y - 20, 30, 30);
                     graphics.strokeRect(x - 20, y - 20, 30, 30);
                 } else if (toolChoice == 3) {
-                    graphics.fillCircle(x - 20, y - 20, 30, 30);
-                    graphics.strokeCircle(x - 20, y - 20, 30, 30);
+                    graphics.fillCircle(x - 20, y - 20, 30);
+                    graphics.strokeCircle(x - 20, y - 20, 30);
                 }
                 /*------------------------------------------------------------*/
 
@@ -156,8 +170,6 @@
             canvas.addEventListener("mousedown", doMouseDown, false);
 
         } // end installMouseHandler
-
-
         /**
          * This function can be called to add a collection of extra drawing function to
          * a graphics context, to make it easier to draw basic shapes with that context.
@@ -206,6 +218,25 @@
                 this.closePath();
                 this.fill();
             }
+            graphics.fillPolyWithArray = function(x, y, n) {
+                this.beginPath();
+                for (var i = 0; i < n; i = i + 1) {
+                    this.lineTo(x[i], y[i]);
+                }
+                this.closePath();
+                this.fill();
+            }
+
+            graphics.strokePolyWithArray = function(x, y, n) {
+                this.beginPath();
+                for (var i = 0; i < n; i = i + 1) {
+                    this.lineTo(x[i], y[i]);
+                }
+                this.closePath();
+                this.stroke();
+                console.log("co jest");
+            }
+
             graphics.strokePoly = function() {
                 if (arguments.length < 4)
                     return;
@@ -217,6 +248,7 @@
                 this.closePath();
                 this.stroke();
             }
+
             graphics.fillOval = function(x, y, horizontalRadius, verticalRadius) {
                 this.save();
                 this.translate(x, y);
