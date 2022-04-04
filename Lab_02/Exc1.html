@@ -64,7 +64,6 @@
             graphics.fillStyle = 'white';
             graphics.fillCircle(262, 308, 3);
 
-            //graphics.strokeCircle();
             graphics.fillStyle = 'white';
             graphics.fillCircle(335, 310, 15);
             graphics.fillStyle = 'black';
@@ -81,10 +80,21 @@
             graphics.fill();
             graphics.closePath();
             graphics.beginPath();
-            graphics.bezierCurveTo(250, 400, 270, 410, 265, 375);
             graphics.fillStyle = 'black';
-            graphics.fill();
+            graphics.fillOval(348, 392, 15, 15);
+            graphics.fillStyle = 'rgb(0,255,1)';
+            graphics.fillOval(358, 384, 25, 25);
 
+            graphics.fillStyle = 'black';
+            graphics.fillOval(252, 392, 15, 15);
+            graphics.fillStyle = 'rgb(0,255,1)';
+            graphics.fillOval(242, 384, 25, 25);
+
+            //teeth
+            graphics.fillStyle = "white";
+
+            graphics.fillPoly(283, 406, 299, 407, 299, 418, 283, 417);
+            graphics.fillPoly(301, 407, 317, 406, 317, 417, 301, 418);
         }
 
 

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <!--
@@ -129,8 +128,8 @@
                     graphics.fillStyle = "orange";
                 }
                 if (toolChoice == 1) {
-                    graphics.fillPoly();
-                    graphics.strokePoly();
+                    graphics.fillPoly(x, y - 20, x + 20, y + 20, x - 20, y + 20);
+                    graphics.strokePoly(x, y - 20, x + 20, y + 20, x - 20, y + 20);
                 } else if (toolChoice == 2) {
                     graphics.fillRect(x - 20, y - 20, 30, 30);
                     graphics.strokeRect(x - 20, y - 20, 30, 30);
