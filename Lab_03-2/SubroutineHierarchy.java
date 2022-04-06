@@ -26,10 +26,10 @@ public class SubroutineHierarchy extends JPanel {
 	private final static int WIDTH = 800;   // The preferred size for the drawing area.
 	private final static int HEIGHT = 600;
 
-	private final static double X_LEFT = -4;    // The xy limits for the coordinate system.
-	private final static double X_RIGHT = 4;
-	private final static double Y_BOTTOM = -3;
-	private final static double Y_TOP = 3;
+	private final static double X_LEFT = 0;    // The xy limits for the coordinate system.
+	private final static double X_RIGHT = 800;
+	private final static double Y_BOTTOM = 600;
+	private final static double Y_TOP = 0;
 
 	private final static Color BACKGROUND = Color.WHITE; // Initial background color for drawing.
 
@@ -46,7 +46,8 @@ public class SubroutineHierarchy extends JPanel {
 	private void drawWorld(Graphics2D g2) {
 
 		// TODO: Draw the content of the scene.
-		rotatingRect(g2);  // (DELETE THIS EXAMPLE)
+		g2.translate(0,0);
+		drawTheObject(400, 300, Color.blue, g2,50);
 
 	} // end drawWorld()
 	
@@ -61,17 +62,8 @@ public class SubroutineHierarchy extends JPanel {
 
     
 	// TODO: Define methods for drawing objects in the scene.
-	
-	private void rotatingRect(Graphics2D g2) { // (DELETE THIS EXAMPLE)
-		AffineTransform saveTransform = g2.getTransform();  // (It might be necessary to save/restore transform and color)
-		Color saveColor = g2.getColor();
-		g2.setColor( Color.RED );
-		g2.rotate( Math.toRadians( frameNumber*0.75 ));
-		g2.scale( 2, 2 );
-		filledRect(g2);
-		g2.setColor(saveColor);
-		g2.setTransform(saveTransform);
-	}
+
+
 
 
 	//------------------- Some methods for drawing basic shapes. ----------------
@@ -96,17 +88,47 @@ public class SubroutineHierarchy extends JPanel {
 		g2.draw(new Ellipse2D.Double(-0.5,-0.5,1,1));
 	}
 	
-	private static void filledTriangle(Graphics2D g2) { // width = 1, height = 1, center of base is at (0,0);
+	public void filledTriangle(Graphics2D g2, int size, int x, int y, Color color) { // width = 1, height = 1, center of base is at (0,0);
 		Path2D path = new Path2D.Double();  
-		path.moveTo(-0.5,0);
-		path.lineTo(0.5,0);
-		path.lineTo(0,1);
+		path.moveTo(x - (size/2), y);
+		path.lineTo(x+(size/2), y);
+		path.lineTo(x,y-(size*2));
 		path.closePath();
+		g2.setColor(color);
 		g2.fill(path);
 	}
+	public void filledPolygon(Graphics2D g2, int numberOfEdges, int radius, Color color){
+		Polygon p = new Polygon();
+		for (int i = 1; i <= numberOfEdges; i++) {
+			double xPoint = radius * Math.sin(Math.PI / ( (double)numberOfEdges/ 2) * i);
+			double yPoint = radius * Math.cos(Math.PI / ( (double)numberOfEdges / 2) * i);
+			p.addPoint((int)xPoint, (int)yPoint);
+		}
+		g2.setColor(color);
+		g2.fillPolygon(p);
+	}
+	//method that let you choose any color for the exercise
 
+	public void rotatingPolygon(Graphics2D g2, int numberOfEdges, int radius, Color color,int x, int y){
 
+		AffineTransform saveTransform = g2.getTransform();
+		Color saveColor = g2.getColor(); // (It might be necessary to save/restore transform and color)
+		g2.rotate( Math.toRadians( frameNumber*0.75 ));
+		g2.translate(x, y);
+		filledPolygon(g2, 15, 100, color);
+		g2.setTransform(saveTransform);
+		g2.setColor(saveColor);
+	};
 
+	public void drawTheObject(int x, int y, Color color, Graphics2D g2,int size){
+
+		filledTriangle(g2, size, x, y, color);
+		AffineTransform saveTransform = g2.getTransform();
+		Color saveColor = g2.getColor();
+		rotatingPolygon(g2,15,50,Color.black,0, 0);
+		g2.setTransform(saveTransform);
+		g2.setColor(saveColor);
+	}
 	//--------------------------------- Implementation ------------------------------------
 
 	private JPanel display;  // The JPanel in which the scene is drawn.
