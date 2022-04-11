@@ -1,1 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+width="900px" height="700px"
+viewBox="0 0 3 2"
+preserveAspectRatio="xMidYMid">
 
+<rect x="1.25" y="0.5" width ="1.5" height ="0.08" fill="red"
+transform="rotate(20)"/>
+<polygon points="2, 2.5 1.4, 2.5 1.7,1.2"
+fill ="blue"/>
+
+<rect x="0.1" y="-0.03" width="1" height="0.05" fill="red" transform="rotate(20)"/>
+<polygon points="0.4,1 0.7, 1 0.55, 0.2"
+style="fill:rgb(140,20,16)"/>
+
+<rect x="1.7" y="-0.65" width="1.2" height="0.05" fill="red" transform="rotate(20)"/>
+<polygon points="2.3, 0.7 2.5, 0.7 2.4, 0.2" 
+style="fill:rgb(0,120,0)"/>
+
+</svg>
